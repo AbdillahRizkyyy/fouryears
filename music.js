@@ -62,16 +62,27 @@
     } catch (e) {}
 
     audio.src = track.src;
+    audio.load();
+
     audio.onerror = () => {
-      // Fallback to original filename if needed
       if (audio.src !== track.fallback) {
         audio.src = track.fallback;
+        audio.load();
         audio.play().catch(() => {});
       }
     };
 
     if (resumeTime > 0) {
-      audio.currentTime = resumeTime;
+      const applyResume = () => {
+        try {
+          audio.currentTime = resumeTime;
+        } catch (e) {}
+      };
+      if (audio.readyState >= 1) {
+        applyResume();
+      } else {
+        audio.addEventListener("loadedmetadata", applyResume, { once: true });
+      }
     }
 
     updateUI();
@@ -95,7 +106,7 @@
       }).catch((err) => {
         isPlaying = false;
         updateUI();
-        // Modern browser autoplay policy requires user interaction
+        // Setup instant user interaction listener without eating events
         setupInteractionAutoplay();
       });
     }
@@ -137,28 +148,42 @@
     }
   });
 
-  // --- Autoplay with Fallback on User Interaction ---
+  // --- Autoplay on First User Touch/Click (Zero Latency) ---
+  let gestureListenerAttached = false;
   function setupInteractionAutoplay() {
-    const handleFirstGesture = () => {
-      if (!isPlaying) {
-        playTrack(currentIndex, true);
+    if (gestureListenerAttached || isPlaying) return;
+    gestureListenerAttached = true;
+
+    const tryGesturePlay = () => {
+      if (isPlaying) {
+        removeListeners();
+        return;
       }
-      cleanupListeners();
+      const p = audio.play();
+      if (p !== undefined) {
+        p.then(() => {
+          isPlaying = true;
+          try { sessionStorage.setItem(STORAGE_PAUSED, "false"); } catch(e) {}
+          updateUI();
+          showNowPlayingToast(PLAYLIST[currentIndex]);
+          removeListeners();
+        }).catch(() => {
+          // If rejected, keep listening until a valid touch or click occurs
+        });
+      }
     };
 
-    const cleanupListeners = () => {
-      window.removeEventListener("pointerdown", handleFirstGesture);
-      window.removeEventListener("click", handleFirstGesture);
-      window.removeEventListener("touchstart", handleFirstGesture);
-      window.removeEventListener("scroll", handleFirstGesture);
-      window.removeEventListener("keydown", handleFirstGesture);
+    const removeListeners = () => {
+      gestureListenerAttached = false;
+      ['touchstart', 'touchend', 'pointerdown', 'click'].forEach(evt => {
+        window.removeEventListener(evt, tryGesturePlay, { capture: true });
+      });
     };
 
-    window.addEventListener("pointerdown", handleFirstGesture, { once: true, passive: true });
-    window.addEventListener("click", handleFirstGesture, { once: true, passive: true });
-    window.addEventListener("touchstart", handleFirstGesture, { once: true, passive: true });
-    window.addEventListener("scroll", handleFirstGesture, { once: true, passive: true });
-    window.addEventListener("keydown", handleFirstGesture, { once: true, passive: true });
+    // Listen to touchstart, touchend, pointerdown, click (NOT scroll, which browser blocks)
+    ['touchstart', 'touchend', 'pointerdown', 'click'].forEach(evt => {
+      window.addEventListener(evt, tryGesturePlay, { capture: true, passive: true });
+    });
   }
 
   // --- Create DOM UI ---
