@@ -34,3 +34,4 @@ Buka http://127.0.0.1:4174. Perlu Node.js; tidak perlu `npm install` karena tida
 Font diambil dari Google Fonts saat tersedia internet; browser memakai font cadangan saat offline. Tidak ada musik yang disertakan.
 
 Ini salinan lokal mandiri. Tidak menyertakan kredensial, riwayat Git, atau konfigurasi penerbitan Sites. Mengedit folder ini tidak mengubah website online secara otomatis.
+# fouryears
