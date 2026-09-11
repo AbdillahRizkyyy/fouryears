@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6b233b">
+  <title>Album Kenangan — 4 Tahun, Tetap Kamu</title>
+  <meta name="description" content="Semua kenangan kita dalam satu album polaroid. Klik foto mana saja untuk membuka ceritanya.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236b233b'/%3E%3Ctext x='16' y='24' text-anchor='middle' fill='%23fff7eb' font-size='25'%3E4%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="gallery.css">
+  <link rel="stylesheet" href="music.css">
+</head>
+<body>
+
+  <!-- Sticky Nav -->
+  <nav class="gallery-nav">
+    <a href="index.html" class="back-link">← Kembali</a>
+    <span class="nav-title">Album Kenangan Kita ♡</span>
+    <span class="photo-badge" id="photo-count-badge">76 Kenangan</span>
+  </nav>
+
+  <!-- Hero -->
+  <header class="gallery-hero">
+    <p class="eyebrow">THE MEMORY ALBUM • 2021 — 2026</p>
+    <h1>Semua Kenangan,<br><em>Dalam Satu Album.</em></h1>
+    <p class="subtitle">Klik foto mana saja untuk melihat lebih dekat.</p>
+
+    <!-- Filter -->
+    <div class="filter-bar" id="filter-container" role="group" aria-label="Filter kategori foto">
+      <!-- Di-render oleh gallery.js -->
+    </div>
+  </header>
+
+  <!-- Scrapboard -->
+  <main class="scrapboard" id="scrapboard" aria-label="Album polaroid kenangan">
+    <!-- Di-render oleh gallery.js -->
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-modal="true" aria-label="Foto kenangan">
+    <button class="lb-btn lb-close" id="lb-close" aria-label="Tutup foto">×</button>
+    <button class="lb-btn lb-prev" id="lb-prev" aria-label="Foto sebelumnya">❮</button>
+    <button class="lb-btn lb-next" id="lb-next" aria-label="Foto berikutnya">❯</button>
+    <div class="lightbox-img-wrapper" id="lb-img-wrapper"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="gallery-footer">
+    <p>4 Tahun, Tetap Kamu. ♡</p>
+    <a href="index.html" class="back-to-home">← Kembali ke Halaman Utama</a>
+  </footer>
+
+  <script src="gallery-data.js"></script>
+  <script src="gallery.js"></script>
+  <script src="music.js" defer></script>
+</body>
+</html>

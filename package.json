@@ -1,0 +1,7 @@
+{
+  "name": "fouryears",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website anniversary untuk Suci — 4 Tahun, Tetap Kamu",
+  "scripts": { "start": "node server.cjs" }
+}
