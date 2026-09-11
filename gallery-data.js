@@ -704,5 +704,124 @@ const galleryPhotos = [
     category: "special",
     src: "assets/gallery/foto-76.jpeg",
     color: "#e5c0a9"
+  },
+
+  // --- Foto Baru (September 2026) ---
+  {
+    id: 77,
+    title: "Momen Berdua",
+    caption: "Salah satu potongan hari indah yang terekam bersama perempuan kesayanganku.",
+    date: "Sep 2026",
+    category: "special",
+    src: "assets/gallery/foto-77.jpg",
+    color: "#d8cee8"
+  },
+  {
+    id: 78,
+    title: "Kamu yang Selalu Bikin Hati Tenang",
+    caption: "Ada yang beda tiap kali kita bareng — semuanya terasa lebih hangat dan lebih hidup.",
+    date: "Sep 2026",
+    category: "special",
+    src: "assets/gallery/foto-78.jpg",
+    color: "#e4d3ca"
+  },
+  {
+    id: 79,
+    title: "Senyum Khas Suci",
+    caption: "Senyum yang tak pernah gagal mencerahkan hariku, hari ini dan selalu.",
+    date: "Sep 2026",
+    category: "special",
+    src: "assets/gallery/foto-79.jpg",
+    color: "#cbe0d8"
+  },
+  {
+    id: 80,
+    title: "Waktu Terbaik",
+    caption: "Bersama kamu, detik-detik biasa pun jadi kenangan yang ingin terus kusimpan.",
+    date: "Sep 2026",
+    category: "random",
+    src: "assets/gallery/foto-80.jpg",
+    color: "#ebd0cb"
+  },
+  {
+    id: 81,
+    title: "Cerita Hari Ini",
+    caption: "Mendengar kamu bercerita — satu hal yang selalu menjadi bagian favorit hariku.",
+    date: "Sep 2026",
+    category: "random",
+    src: "assets/gallery/foto-81.jpg",
+    color: "#cbd5e7"
+  },
+  {
+    id: 82,
+    title: "Kita dan Tawa Kita",
+    caption: "Ketawa bareng tanpa alasan jelas — tapi itu selalu cukup untuk bikin semua terasa baik-baik aja.",
+    date: "Sep 2026",
+    category: "random",
+    src: "assets/gallery/foto-82.jpg",
+    color: "#d4dfcc"
+  },
+  {
+    id: 83,
+    title: "Candid Favoritku",
+    caption: "Foto yang diambil diam-diam, tapi auramu tidak pernah bisa disembunyikan.",
+    date: "Sep 2026",
+    category: "random",
+    src: "assets/gallery/foto-83.jpg",
+    color: "#e8d2dc"
+  },
+  {
+    id: 84,
+    title: "Hari Yang Penuh Rasa",
+    caption: "Tidak butuh kata-kata banyak — kehadiranmu sendiri sudah lebih dari cukup.",
+    date: "Sep 2026",
+    category: "special",
+    src: "assets/gallery/foto-84.jpg",
+    color: "#cfded3"
+  },
+  {
+    id: 85,
+    title: "Sudut Pandang Favoritku",
+    caption: "Dari sudut manapun aku memandang, kamu selalu jadi bagian yang paling indah.",
+    date: "Sep 2026",
+    category: "special",
+    src: "assets/gallery/foto-85.jpg",
+    color: "#eedaca"
+  },
+  {
+    id: 86,
+    title: "Momen Santai Berdua",
+    caption: "Ga perlu tujuan kemana-mana — yang penting bisa bareng kamu.",
+    date: "Sep 2026",
+    category: "medan",
+    src: "assets/gallery/foto-86.jpg",
+    color: "#d0d4e8"
+  },
+  {
+    id: 87,
+    title: "Hangat Seperti Biasa",
+    caption: "Kamu dan kehangatanmu yang selalu berhasil bikin aku betah dan nyaman.",
+    date: "Sep 2026",
+    category: "special",
+    src: "assets/gallery/foto-87.jpg",
+    color: "#e6cfca"
+  },
+  {
+    id: 88,
+    title: "Kenangan Terindah Hari Ini",
+    caption: "Setiap foto bersamamu adalah bukti betapa berharganya setiap momen kita.",
+    date: "Sep 2026",
+    category: "special",
+    src: "assets/gallery/foto-88.jpg",
+    color: "#cbdae6"
+  },
+  {
+    id: 89,
+    title: "Untuk Kita Berdua",
+    caption: "Di penghujung 4 tahun ini, satu hal yang paling kusyukuri adalah — kamu masih di sini.",
+    date: "12 Sep 2026",
+    category: "special",
+    src: "assets/gallery/foto-89.jpg",
+    color: "#e2d6ca"
   }
 ];

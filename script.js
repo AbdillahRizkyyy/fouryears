@@ -33,12 +33,44 @@ const memories=[
     "url": "assets/gallery/foto-23.jpg"
   },
   {
+    "year": "2024",
+    "title": "Awal yang Baru Bersama",
+    "label": "foto pertemuan pertama setelah balikan",
+    "caption": "Pertemuan pertama setelah kita balikan, yang bertepatan langsung dengan hari ulang tahunku. Sederhana, tapi penuh makna — kamu hadir, dan itu sudah lebih dari cukup.",
+    "color": "#d6c4d8",
+    "url": "assets/gallery/foto-78.jpg"
+  },
+  {
+    "year": "2024",
+    "title": "Ikut Bazar Kampusnya",
+    "label": "foto di bazar kampus Medan",
+    "caption": "Sengaja datang ke Medan untuk ketemu kamu, dan malah ikut meramaikan bazar di kampusmu. Jadi bagian dari hari-harimu di sana — hal kecil yang rasanya hangat banget.",
+    "color": "#c9ded3",
+    "url": "assets/gallery/foto-17.jpg"
+  },
+  {
     "year": "2025",
     "title": "Bunga untuk Suci",
     "label": "foto ulang tahun Januari",
     "caption": "Januari 2025. Kali ini aku datang langsung untuk merayakan ulang tahunmu, sambil membawa bunga. Satu potongan waktu bersama di antara hari-hari Langsa dan Medan.",
     "color": "#e5c0a9",
     "url": "assets/gallery/foto-76.jpeg"
+  },
+  {
+    "year": "2025",
+    "title": "Setiap Hari, Selalu Ada Kamu",
+    "label": "foto rutinitas vc setiap hari",
+    "caption": "LDR bukan halangan kalau kita punya kebiasaan ini — VC setiap hari, tanpa absen. Wajahmu di layar HP setiap malam jadi bagian dari rutinitas yang paling aku tunggu.",
+    "color": "#dfd6ca",
+    "url": "assets/gallery/foto-88.jpg"
+  },
+  {
+    "year": "2026",
+    "title": "Magang di Kotamu",
+    "label": "foto saat magang di Medan",
+    "caption": "Sengaja mengambil kesempatan magang di Medan — bukan cuma soal karier, tapi karena di sana ada kamu. Bisa dekat dan ketemu lebih sering jadi alasan terbesar di balik keputusan itu.",
+    "color": "#cfd7e8",
+    "url": "assets/gallery/foto-90.jpeg"
   },
   {
     "year": "2026",
@@ -50,7 +82,7 @@ const memories=[
   }
 ];
 const board=document.getElementById('board'),dialog=document.getElementById('memory-dialog');let filter='all',selected=0,z=2;
-const desktop=[[3,35,-9],[36,5,5],[69,48,-5],[6,405,6],[39,430,-7],[70,400,9]],mobile=[[3,25,-7],[53,60,6],[4,280,5],[52,310,-6],[4,620,-7],[52,655,8]];
+const desktop=[[2,35,-9],[34,5,5],[67,45,-5],[4,285,7],[37,258,-6],[69,272,8],[8,515,5],[60,500,-8],[20,725,-5],[55,710,7]],mobile=[[3,25,-7],[53,60,6],[4,295,5],[52,325,-6],[3,565,-7],[52,600,8],[4,840,6],[52,870,-5],[20,1110,-4],[52,1100,7]];
 memories.forEach((m,i)=>{const p=document.createElement('article');p.className='polaroid';p.dataset.index=i;p.style.setProperty('--photo-bg',m.color);p.style.setProperty('--delay',`${i*.07}s`);p.innerHTML=`<button class="photo-window" aria-label="Buka kenangan: ${m.title}">${m.url?`<img src="${m.url}" alt="${m.title}" style="width:100%;height:100%;object-fit:cover;object-position:${m.position||'center'};display:block;">`:`<span class="empty-number">${String(i+1).padStart(2,'0')}</span><span class="empty-label">${m.label}</span>`}</button><button class="polaroid-caption">${m.title}</button><div class="polaroid-bottom"><span>${m.year} · OUR LITTLE STORY</span></div>`;board.append(p);m.element=p;m.dx=0;m.dy=0;
  let touchTimer=null,isTouchDrag=false,startTouchX=0,startTouchY=0,initTouchDx=0,initTouchDy=0,didTouchMove=false;
  p.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;startTouchX=e.touches[0].clientX;startTouchY=e.touches[0].clientY;initTouchDx=m.dx;initTouchDy=m.dy;isTouchDrag=false;didTouchMove=false;touchTimer=setTimeout(()=>{isTouchDrag=true;p.classList.add('dragging');p.style.zIndex=++z;},150);},{passive:true});
