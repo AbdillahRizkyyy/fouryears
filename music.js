@@ -46,6 +46,7 @@
   } catch (e) {}
 
   let isPlaying = false;
+  let isPlayPending = false;
   let toastTimeout = null;
 
   // Single Audio Instance
@@ -53,7 +54,7 @@
   audio.preload = "auto";
 
   // --- Load Track ---
-  function loadTrack(index, resumeTime = 0) {
+  function loadTrack(index) {
     currentIndex = (index + PLAYLIST.length) % PLAYLIST.length;
     const track = PLAYLIST[currentIndex];
 
@@ -62,53 +63,51 @@
     } catch (e) {}
 
     audio.src = track.src;
-    audio.load();
 
     audio.onerror = () => {
       if (audio.src !== track.fallback) {
         audio.src = track.fallback;
-        audio.load();
-        audio.play().catch(() => {});
+        if (isPlaying) {
+          audio.play().catch(() => {});
+        }
       }
     };
-
-    if (resumeTime > 0) {
-      const applyResume = () => {
-        try {
-          audio.currentTime = resumeTime;
-        } catch (e) {}
-      };
-      if (audio.readyState >= 1) {
-        applyResume();
-      } else {
-        audio.addEventListener("loadedmetadata", applyResume, { once: true });
-      }
-    }
 
     updateUI();
   }
 
   // --- Play Track ---
   function playTrack(index = currentIndex, showNotification = true) {
+    if (isPlayPending) return;
+
     if (index !== currentIndex || !audio.src) {
       loadTrack(index);
     }
 
+    isPlayPending = true;
     const promise = audio.play();
+
     if (promise !== undefined) {
       promise.then(() => {
+        isPlayPending = false;
         isPlaying = true;
         try { sessionStorage.setItem(STORAGE_PAUSED, "false"); } catch(e) {}
         updateUI();
         if (showNotification) {
           showNowPlayingToast(PLAYLIST[currentIndex]);
         }
+        cleanupGestureListeners();
       }).catch((err) => {
+        isPlayPending = false;
         isPlaying = false;
         updateUI();
-        // Setup instant user interaction listener without eating events
+        // Setup listener for first user interaction (touch/click) to play immediately
         setupInteractionAutoplay();
       });
+    } else {
+      isPlayPending = false;
+      isPlaying = true;
+      updateUI();
     }
   }
 
@@ -116,6 +115,7 @@
   function pauseTrack() {
     audio.pause();
     isPlaying = false;
+    isPlayPending = false;
     try { sessionStorage.setItem(STORAGE_PAUSED, "true"); } catch(e) {}
     updateUI();
   }
@@ -148,42 +148,34 @@
     }
   });
 
-  // --- Autoplay on First User Touch/Click (Zero Latency) ---
-  let gestureListenerAttached = false;
+  // --- Autoplay on First User Gesture ---
+  let gestureAttached = false;
   function setupInteractionAutoplay() {
-    if (gestureListenerAttached || isPlaying) return;
-    gestureListenerAttached = true;
+    if (gestureAttached || isPlaying) return;
+    gestureAttached = true;
 
-    const tryGesturePlay = () => {
-      if (isPlaying) {
-        removeListeners();
-        return;
-      }
-      const p = audio.play();
-      if (p !== undefined) {
-        p.then(() => {
-          isPlaying = true;
-          try { sessionStorage.setItem(STORAGE_PAUSED, "false"); } catch(e) {}
-          updateUI();
-          showNowPlayingToast(PLAYLIST[currentIndex]);
-          removeListeners();
-        }).catch(() => {
-          // If rejected, keep listening until a valid touch or click occurs
-        });
+    const onUserAction = () => {
+      if (!isPlaying && !isPlayPending) {
+        playTrack(currentIndex, true);
       }
     };
 
-    const removeListeners = () => {
-      gestureListenerAttached = false;
-      ['touchstart', 'touchend', 'pointerdown', 'click'].forEach(evt => {
-        window.removeEventListener(evt, tryGesturePlay, { capture: true });
-      });
-    };
+    window.__fyOnUserAction = onUserAction;
 
-    // Listen to touchstart, touchend, pointerdown, click (NOT scroll, which browser blocks)
-    ['touchstart', 'touchend', 'pointerdown', 'click'].forEach(evt => {
-      window.addEventListener(evt, tryGesturePlay, { capture: true, passive: true });
-    });
+    // Attach to touch/click events
+    window.addEventListener("touchstart", onUserAction, { passive: true, once: true });
+    window.addEventListener("click", onUserAction, { passive: true, once: true });
+    window.addEventListener("pointerdown", onUserAction, { passive: true, once: true });
+  }
+
+  function cleanupGestureListeners() {
+    gestureAttached = false;
+    if (window.__fyOnUserAction) {
+      window.removeEventListener("touchstart", window.__fyOnUserAction);
+      window.removeEventListener("click", window.__fyOnUserAction);
+      window.removeEventListener("pointerdown", window.__fyOnUserAction);
+      delete window.__fyOnUserAction;
+    }
   }
 
   // --- Create DOM UI ---
@@ -324,25 +316,10 @@
   function init() {
     createUI();
 
-    // Check if user previously paused music in this session
-    let wasPaused = false;
-    let resumeTime = 0;
-    try {
-      wasPaused = sessionStorage.getItem(STORAGE_PAUSED) === "true";
-      const savedTime = parseFloat(sessionStorage.getItem(STORAGE_TIME));
-      if (!isNaN(savedTime) && savedTime > 0) {
-        resumeTime = savedTime;
-      }
-    } catch(e) {}
+    loadTrack(currentIndex);
 
-    loadTrack(currentIndex, resumeTime);
-
-    if (!wasPaused) {
-      // User wants auto-play as requested!
-      playTrack(currentIndex, true);
-    } else {
-      updateUI();
-    }
+    // Attempt to auto-play right away
+    playTrack(currentIndex, true);
   }
 
   if (document.readyState === "loading") {
