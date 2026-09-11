@@ -148,34 +148,78 @@
     }
   });
 
-  // --- Autoplay on First User Gesture ---
+  // --- Autoplay on First User Gesture (Persistent Until Success) ---
   let gestureAttached = false;
+  const GESTURE_EVENTS = ["touchend", "click", "pointerup", "touchstart"];
+
   function setupInteractionAutoplay() {
     if (gestureAttached || isPlaying) return;
     gestureAttached = true;
 
+    // Show friendly invitation toast to tap anywhere on mobile screen
+    showTapPromptToast();
+
     const onUserAction = () => {
-      if (!isPlaying && !isPlayPending) {
-        playTrack(currentIndex, true);
+      if (isPlaying) {
+        cleanupGestureListeners();
+        return;
+      }
+
+      if (isPlayPending) return;
+      isPlayPending = true;
+
+      const p = audio.play();
+      if (p !== undefined) {
+        p.then(() => {
+          isPlayPending = false;
+          isPlaying = true;
+          try { sessionStorage.setItem(STORAGE_PAUSED, "false"); } catch(e) {}
+          updateUI();
+          showNowPlayingToast(PLAYLIST[currentIndex]);
+          cleanupGestureListeners();
+        }).catch((err) => {
+          isPlayPending = false;
+          // Keep listening! Do NOT remove listeners until play actually succeeds on mobile!
+        });
       }
     };
 
     window.__fyOnUserAction = onUserAction;
 
-    // Attach to touch/click events
-    window.addEventListener("touchstart", onUserAction, { passive: true, once: true });
-    window.addEventListener("click", onUserAction, { passive: true, once: true });
-    window.addEventListener("pointerdown", onUserAction, { passive: true, once: true });
+    GESTURE_EVENTS.forEach(evt => {
+      window.addEventListener(evt, onUserAction, { passive: true });
+    });
   }
 
   function cleanupGestureListeners() {
     gestureAttached = false;
     if (window.__fyOnUserAction) {
-      window.removeEventListener("touchstart", window.__fyOnUserAction);
-      window.removeEventListener("click", window.__fyOnUserAction);
-      window.removeEventListener("pointerdown", window.__fyOnUserAction);
+      GESTURE_EVENTS.forEach(evt => {
+        window.removeEventListener(evt, window.__fyOnUserAction);
+      });
       delete window.__fyOnUserAction;
     }
+  }
+
+  function showTapPromptToast() {
+    const toast = document.getElementById("now-playing-toast");
+    if (!toast || isPlaying) return;
+
+    const titleEl = document.getElementById("toast-title");
+    const artistEl = document.getElementById("toast-artist");
+    const tagEl = toast.querySelector(".toast-tag");
+
+    if (tagEl) tagEl.innerHTML = `♫ MUSIK KENANGAN`;
+    if (titleEl) titleEl.textContent = "Ketuk layar untuk mulai musik ♡";
+    if (artistEl) artistEl.textContent = PLAYLIST[currentIndex].title + " — " + PLAYLIST[currentIndex].artist;
+
+    toast.classList.add("show");
+
+    // Keep prompt visible until user taps, or hide after 8s
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      if (!isPlaying) hideToast();
+    }, 8000);
   }
 
   // --- Create DOM UI ---
