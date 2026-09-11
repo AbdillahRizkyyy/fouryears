@@ -148,16 +148,13 @@
     }
   });
 
-  // --- Autoplay on First User Gesture (Persistent Until Success) ---
+  // --- Autoplay on First User Interaction (Scroll, Touch, or Tap) ---
   let gestureAttached = false;
-  const GESTURE_EVENTS = ["touchend", "click", "pointerup", "touchstart"];
+  const GESTURE_EVENTS = ["scroll", "touchmove", "wheel", "touchstart", "touchend", "pointerdown", "pointerup", "click"];
 
   function setupInteractionAutoplay() {
     if (gestureAttached || isPlaying) return;
     gestureAttached = true;
-
-    // Show friendly invitation toast to tap anywhere on mobile screen
-    showTapPromptToast();
 
     const onUserAction = () => {
       if (isPlaying) {
@@ -179,7 +176,7 @@
           cleanupGestureListeners();
         }).catch((err) => {
           isPlayPending = false;
-          // Keep listening! Do NOT remove listeners until play actually succeeds on mobile!
+          // Keep listening so continuing scroll or next touch will try again until success
         });
       }
     };
@@ -199,27 +196,6 @@
       });
       delete window.__fyOnUserAction;
     }
-  }
-
-  function showTapPromptToast() {
-    const toast = document.getElementById("now-playing-toast");
-    if (!toast || isPlaying) return;
-
-    const titleEl = document.getElementById("toast-title");
-    const artistEl = document.getElementById("toast-artist");
-    const tagEl = toast.querySelector(".toast-tag");
-
-    if (tagEl) tagEl.innerHTML = `♫ MUSIK KENANGAN`;
-    if (titleEl) titleEl.textContent = "Ketuk layar untuk mulai musik ♡";
-    if (artistEl) artistEl.textContent = PLAYLIST[currentIndex].title + " — " + PLAYLIST[currentIndex].artist;
-
-    toast.classList.add("show");
-
-    // Keep prompt visible until user taps, or hide after 8s
-    if (toastTimeout) clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(() => {
-      if (!isPlaying) hideToast();
-    }, 8000);
   }
 
   // --- Create DOM UI ---

@@ -117,15 +117,24 @@ dialog.photo-only .dialog-close {
 .wishes span.reveal:nth-child(3) { transition-delay: 0.26s !important; }
 
 /* Animasi Reveal untuk Foto Polaroid Scrap-Board */
-.polaroid.reveal {
+.polaroid.reveal:not(.dragging) {
   opacity: 0 !important;
   transform: translate(var(--dx, 0px), calc(var(--dy, 0px) + 40px)) rotate(var(--angle)) scale(0.92) !important;
   transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
   will-change: opacity, transform;
 }
-.polaroid.reveal.visible {
+.polaroid.reveal.visible:not(.dragging) {
   opacity: 1 !important;
   transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--angle)) scale(1) !important;
+}
+
+/* Saat di-drag, matikan transition sama sekali agar responsif instan tanpa delay */
+.polaroid.dragging {
+  transition: none !important;
+  cursor: grabbing !important;
+  box-shadow: 0 20px 40px rgba(73, 52, 32, 0.35) !important;
+  z-index: 999 !important;
+  will-change: transform;
 }
 
 /* Stagger delay foto polaroid scrap-board */
