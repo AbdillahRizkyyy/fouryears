@@ -4,8 +4,9 @@
  *
  * Urutan lagu:
  * 1. Jadian Yuk - Chloe Pawapua
- * 2. About You - The 1975
- * 3. seasons - wave to earth
+ * 2. Sialan - Adrian Khalif & Juicy Luicy
+ * 3. About You - The 1975
+ * 4. seasons - wave to earth
  */
 
 (function () {
@@ -16,6 +17,12 @@
       artist: "Chloe Pawapua",
       src: "assets/music/1-jadian-yuk.mp3",
       fallback: "assets/music/Chloe Pawapua - Jadian Yuk (with Lyrics)(MP3_160K).mp3.mpeg"
+    },
+    {
+      title: "Sialan",
+      artist: "Adrian Khalif & Juicy Luicy",
+      src: "assets/music/Adrian Khalif _ Juicy Luicy - Sialan (Video Lirik)(MP3_160K).mp3.mpeg",
+      fallback: "assets/music/Adrian Khalif _ Juicy Luicy - Sialan (Video Lirik)(MP3_160K).mp3.mpeg"
     },
     {
       title: "About You",
