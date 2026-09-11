@@ -115,3 +115,34 @@ dialog.photo-only .dialog-close {
 .wishes span.reveal:nth-child(1) { transition-delay: 0.06s !important; }
 .wishes span.reveal:nth-child(2) { transition-delay: 0.16s !important; }
 .wishes span.reveal:nth-child(3) { transition-delay: 0.26s !important; }
+
+/* Animasi Reveal untuk Foto Polaroid Scrap-Board */
+.polaroid.reveal {
+  opacity: 0 !important;
+  transform: translate(var(--dx, 0px), calc(var(--dy, 0px) + 40px)) rotate(var(--angle)) scale(0.92) !important;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: opacity, transform;
+}
+.polaroid.reveal.visible {
+  opacity: 1 !important;
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--angle)) scale(1) !important;
+}
+
+/* Stagger delay foto polaroid scrap-board */
+.polaroid:nth-child(1).reveal { transition-delay: 0.04s !important; }
+.polaroid:nth-child(2).reveal { transition-delay: 0.11s !important; }
+.polaroid:nth-child(3).reveal { transition-delay: 0.18s !important; }
+.polaroid:nth-child(4).reveal { transition-delay: 0.25s !important; }
+.polaroid:nth-child(5).reveal { transition-delay: 0.32s !important; }
+.polaroid:nth-child(6).reveal { transition-delay: 0.39s !important; }
+
+/* Hardware acceleration & smooth performance for flow ribbon */
+.flow-scaler-container {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.flow-polaroid-item {
+  contain: layout style;
+  transform-style: preserve-3d;
+}
