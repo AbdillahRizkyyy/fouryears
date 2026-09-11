@@ -132,8 +132,9 @@ dialog.photo-only .dialog-close {
 .polaroid.dragging {
   transition: none !important;
   cursor: grabbing !important;
-  box-shadow: 0 20px 40px rgba(73, 52, 32, 0.35) !important;
-  z-index: 999 !important;
+  box-shadow: 0 24px 48px rgba(73, 52, 32, 0.4) !important;
+  z-index: 9999 !important;
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--angle)) scale(1.05) !important;
   will-change: transform;
 }
 
