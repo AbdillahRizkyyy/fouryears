@@ -74,6 +74,30 @@ const memories=[
   },
   {
     "year": "2026",
+    "title": "Pertama Kalinya ke Langsaku",
+    "label": "foto kunjungan pertama ke Langsa",
+    "caption": "Kali ini giliranmu yang menempuh perjalanan jauh ke Langsa. Pertama kalinya kamu datang ke tempatku — momen yang sudah lama aku nantikan dan selalu kuingat.",
+    "color": "#c5cedb",
+    "url": "assets/gallery/foto-92.jpeg"
+  },
+  {
+    "year": "2026",
+    "title": "Fresh Flower Untukmu",
+    "label": "foto memberikan fresh flower di Langsa",
+    "caption": "Pertama kalinya aku memberikan bunga segar untukmu — bukan di Medan, tapi di Langsa, di tempatku sendiri. Ada sesuatu yang berbeda dan lebih hangat dari biasanya.",
+    "color": "#ecd1cf",
+    "url": "assets/gallery/foto-91.jpeg"
+  },
+  {
+    "year": "2026",
+    "title": "Pulang dari Bangka, Ada Aku",
+    "label": "foto buket kepulangan KKN Bangka",
+    "caption": "KKN di Bangka yang jauh itu akhirnya selesai juga. Aku menyambutmu dengan buket bunga — karena perjalanan jauhmu layak dapat penyambutan yang manis.",
+    "color": "#d8cee8",
+    "url": "assets/gallery/foto-93.jpeg"
+  },
+  {
+    "year": "2026",
     "title": "Halaman kita sekarang",
     "label": "foto terbaru bersama",
     "caption": "Ada banyak yang sudah kita lewati, dan ada yang masih perlu kita bicarakan. Aku ingin kita membuat kenangan baru dengan lebih jujur, lebih lembut, dan lebih saling menjaga.",
@@ -82,7 +106,7 @@ const memories=[
   }
 ];
 const board=document.getElementById('board'),dialog=document.getElementById('memory-dialog');let filter='all',selected=0,z=2;
-const desktop=[[2,35,-9],[34,5,5],[67,45,-5],[4,285,7],[37,258,-6],[69,272,8],[8,515,5],[60,500,-8],[20,725,-5],[55,710,7]],mobile=[[3,25,-7],[53,60,6],[4,295,5],[52,325,-6],[3,565,-7],[52,600,8],[4,840,6],[52,870,-5],[20,1110,-4],[52,1100,7]];
+const desktop=[[2,35,-9],[34,5,5],[67,45,-5],[4,285,7],[37,258,-6],[69,272,8],[8,515,5],[40,490,-8],[70,510,6],[4,745,-5],[37,728,7],[66,742,-7],[25,965,5]],mobile=[[3,25,-7],[53,60,6],[4,295,5],[52,325,-6],[3,565,-7],[52,600,8],[4,840,6],[52,870,-5],[3,1110,-4],[52,1100,7],[4,1370,5],[52,1400,-6],[20,1640,-4]];
 memories.forEach((m,i)=>{const p=document.createElement('article');p.className='polaroid';p.dataset.index=i;p.style.setProperty('--photo-bg',m.color);p.style.setProperty('--delay',`${i*.07}s`);p.innerHTML=`<button class="photo-window" aria-label="Buka kenangan: ${m.title}">${m.url?`<img src="${m.url}" alt="${m.title}" style="width:100%;height:100%;object-fit:cover;object-position:${m.position||'center'};display:block;">`:`<span class="empty-number">${String(i+1).padStart(2,'0')}</span><span class="empty-label">${m.label}</span>`}</button><button class="polaroid-caption">${m.title}</button><div class="polaroid-bottom"><span>${m.year} · OUR LITTLE STORY</span></div>`;board.append(p);m.element=p;m.dx=0;m.dy=0;
  let touchTimer=null,isTouchDrag=false,startTouchX=0,startTouchY=0,initTouchDx=0,initTouchDy=0,didTouchMove=false;
  p.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;startTouchX=e.touches[0].clientX;startTouchY=e.touches[0].clientY;initTouchDx=m.dx;initTouchDy=m.dy;isTouchDrag=false;didTouchMove=false;touchTimer=setTimeout(()=>{isTouchDrag=true;p.classList.add('dragging');p.style.zIndex=++z;},150);},{passive:true});

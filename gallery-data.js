@@ -823,5 +823,43 @@ const galleryPhotos = [
     category: "special",
     src: "assets/gallery/foto-89.jpg",
     color: "#e2d6ca"
+  },
+
+  // --- Momen Langsa & KKN (2026) ---
+  {
+    id: 90,
+    title: "Magang di Kotamu",
+    caption: "Sengaja mengambil kesempatan magang di Medan — bukan cuma soal karier, tapi karena di sana ada kamu. Bisa dekat dan ketemu lebih sering jadi alasan terbesar di balik keputusan itu.",
+    date: "2026",
+    category: "special",
+    src: "assets/gallery/foto-90.jpeg",
+    color: "#cfd7e8"
+  },
+  {
+    id: 91,
+    title: "Fresh Flower Untukmu",
+    caption: "Pertama kalinya aku memberikan bunga segar untukmu — bukan di Medan, tapi di Langsa, di tempatku sendiri. Ada sesuatu yang berbeda dan lebih hangat dari biasanya.",
+    date: "2026",
+    category: "special",
+    src: "assets/gallery/foto-91.jpeg",
+    color: "#ecd1cf"
+  },
+  {
+    id: 92,
+    title: "Pertama Kalinya ke Langsaku",
+    caption: "Kali ini giliranmu yang menempuh perjalanan jauh ke Langsa. Pertama kalinya kamu datang ke tempatku — momen yang sudah lama aku nantikan dan selalu kuingat.",
+    date: "2026",
+    category: "special",
+    src: "assets/gallery/foto-92.jpeg",
+    color: "#c5cedb"
+  },
+  {
+    id: 93,
+    title: "Pulang dari Bangka, Ada Aku",
+    caption: "KKN di Bangka yang jauh itu akhirnya selesai juga. Aku menyambutmu dengan buket bunga — karena perjalanan jauhmu layak dapat penyambutan yang manis.",
+    date: "2026",
+    category: "special",
+    src: "assets/gallery/foto-93.jpeg",
+    color: "#d8cee8"
   }
 ];
